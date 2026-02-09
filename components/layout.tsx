@@ -58,9 +58,15 @@ export function Footer() {
                     </div>
 
                     <nav className="flex items-center gap-8 text-sm text-muted-foreground">
-                        <Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
-                        <Link href="/terms" className="hover:text-primary transition-colors">Terms</Link>
-                        <Link href="/contact" className="hover:text-primary transition-colors">Contact</Link>
+                        {[
+                            { href: "/privacy", label: "Privacy" },
+                            { href: "/terms", label: "Terms" },
+                            { href: "/contact", label: "Contact" }
+                        ].map((link) => (
+                            <Link key={link.href} href={link.href} className="hover:text-primary transition-colors">
+                                {link.label}
+                            </Link>
+                        ))}
                     </nav>
                 </div>
             </div>

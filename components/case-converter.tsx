@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,7 +16,8 @@ import {
     Zap,
     Layout,
     Shield,
-    AlignLeft
+    AlignLeft,
+    LucideIcon
 } from "lucide-react";
 import {
     toSentenceCase,
@@ -34,49 +35,89 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-
 import { PageHeader, InfoCard, InfoGrid } from "@/components/layout";
+import { useCaseConverter } from "@/lib/hooks";
+
+/**
+ * SRP: Separate UI components for specific responsibilities
+ */
+
+function StatBadge({ icon: Icon, label, value }: { icon: LucideIcon, label: string, value: number }) {
+    return (
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-background/50 rounded-full ring-1 ring-border/50 text-sm font-medium text-muted-foreground transition-all hover:ring-primary/30">
+            <Icon className="w-4 h-4 text-primary/60" />
+            <span>{label}: <span className="text-foreground">{value}</span></span>
+        </div>
+    );
+}
+
+function IconButton({
+    icon: Icon,
+    tooltip,
+    onClick,
+    disabled,
+    className,
+    success = false
+}: {
+    icon: LucideIcon,
+    tooltip: string,
+    onClick: () => void,
+    disabled?: boolean,
+    className?: string,
+    success?: boolean
+}) {
+    return (
+        <TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger asChild>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={onClick}
+                        disabled={disabled}
+                        className={cn("rounded-xl transition-all duration-300", className)}
+                    >
+                        {success ? <Check className="w-4 h-4 animate-in zoom-in" /> : <Icon className="w-4 h-4" />}
+                    </Button>
+                </TooltipTrigger>
+                <TooltipContent>{tooltip}</TooltipContent>
+            </Tooltip>
+        </TooltipProvider>
+    );
+}
+
+interface ConversionOption {
+    label: string;
+    fn: (t: string) => string;
+}
+
+const CONVERSION_OPTIONS: ConversionOption[] = [
+    { label: "Sentence case", fn: toSentenceCase },
+    { label: "lower case", fn: toLowerCase },
+    { label: "UPPER CASE", fn: toUpperCase },
+    { label: "Capitalized Case", fn: toCapitalizedCase },
+    { label: "aLtErNaTiNg cAsE", fn: toAlternatingCase },
+    { label: "Title Case", fn: toTitleCase },
+    { label: "InVeRsE CaSe", fn: toInverseCase },
+];
 
 export function CaseConverter() {
-    const [text, setText] = useState("");
-    const [copied, setCopied] = useState(false);
+    const {
+        text,
+        setText,
+        stats,
+        copied,
+        handleCopy,
+        handleDownload,
+        handleClear,
+        applyConversion,
+    } = useCaseConverter();
+
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    const stats = {
-        characters: text.length,
-        words: text.trim() === "" ? 0 : text.trim().split(/\s+/).length,
-        sentences: text.trim() === "" ? 0 : text.split(/[\.\!\?]+/).filter(Boolean).length,
-        lines: text.trim() === "" ? 0 : text.split(/\n/).length,
-    };
-
-    const handleCopy = async () => {
-        if (!text) return;
-        await navigator.clipboard.writeText(text);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
-
-    const handleDownload = () => {
-        if (!text) return;
-        const element = document.createElement("a");
-        const file = new Blob([text], { type: "text/plain" });
-        element.href = URL.createObjectURL(file);
-        element.download = "converted-text.txt";
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-    };
-
-    const handleClear = () => {
-        setText("");
-        if (textareaRef.current) {
-            textareaRef.current.focus();
-        }
-    };
-
-    const applyConversion = (conversionFn: (t: string) => string) => {
-        if (!text) return;
-        setText(conversionFn(text));
+    const onClear = () => {
+        handleClear();
+        textareaRef.current?.focus();
     };
 
     return (
@@ -88,115 +129,67 @@ export function CaseConverter() {
                 gradient
             />
 
-            <Card className="border-none shadow-2xl bg-card/50 backdrop-blur-sm overflow-hidden ring-1 ring-border/50 py-0">
+            <Card className="border-none shadow-2xl bg-card/50 backdrop-blur-sm overflow-hidden ring-1 ring-border/50 py-0 group/card">
                 <CardContent className="p-0">
-                    <div className="relative group">
+                    <div className="relative">
                         <Textarea
                             ref={textareaRef}
                             placeholder="Paste or type your text here..."
-                            className="min-h-[200px] md:min-h-[300px] p-6 md:p-8 text-lg border-none focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent resize-y transition-all duration-300 placeholder:text-muted-foreground/50"
+                            className="min-h-[200px] md:min-h-[350px] p-6 md:p-8 text-lg border-none focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent resize-y transition-all duration-300 placeholder:text-muted-foreground/40 leading-relaxed"
                             value={text}
                             onChange={(e) => setText(e.target.value)}
                         />
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-between gap-4 p-4 md:px-8 md:py-6 bg-muted/30 border-t border-border/50">
-                        <div className="flex flex-wrap gap-6 text-sm font-medium text-muted-foreground">
-                            <div className="flex items-center gap-2 px-3 py-1.5 bg-background/50 rounded-full ring-1 ring-border/50">
-                                <Hash className="w-4 h-4" />
-                                <span>Chars: <span className="text-foreground">{stats.characters}</span></span>
-                            </div>
-                            <div className="flex items-center gap-2 px-3 py-1.5 bg-background/50 rounded-full ring-1 ring-border/50">
-                                <FileText className="w-4 h-4" />
-                                <span>Words: <span className="text-foreground">{stats.words}</span></span>
-                            </div>
-                            <div className="flex items-center gap-2 px-3 py-1.5 bg-background/50 rounded-full ring-1 ring-border/50">
-                                <AlignLeft className="w-4 h-4" />
-                                <span>Lines: <span className="text-foreground">{stats.lines}</span></span>
-                            </div>
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-6 p-4 md:px-8 md:py-6 bg-muted/40 border-t border-border/50 backdrop-blur-md">
+                        <div className="flex flex-wrap justify-center sm:justify-start gap-4">
+                            <StatBadge icon={Hash} label="Chars" value={stats.characters} />
+                            <StatBadge icon={FileText} label="Words" value={stats.words} />
+                            <StatBadge icon={AlignLeft} label="Lines" value={stats.lines} />
                         </div>
 
-                        <div className="flex items-center gap-2">
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            onClick={handleCopy}
-                                            disabled={!text}
-                                            className={cn(
-                                                "rounded-xl transition-all duration-300",
-                                                copied && "bg-green-500/10 border-green-500/50 text-green-600 hover:bg-green-500/20"
-                                            )}
-                                        >
-                                            {copied ? <Check className="w-4 h-4 animate-in zoom-in" /> : <Copy className="w-4 h-4" />}
-                                        </Button>
-                                    </TooltipTrigger>
-                                    <TooltipContent>Copy to Clipboard</TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            onClick={handleDownload}
-                                            disabled={!text}
-                                            className="rounded-xl"
-                                        >
-                                            <Download className="w-4 h-4" />
-                                        </Button>
-                                    </TooltipTrigger>
-                                    <TooltipContent>Download as TXT</TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            onClick={handleClear}
-                                            disabled={!text}
-                                            className="rounded-xl hover:bg-destructive/10 hover:text-destructive transition-colors"
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </Button>
-                                    </TooltipTrigger>
-                                    <TooltipContent>Clear All</TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
+                        <div className="flex items-center gap-3">
+                            <IconButton
+                                icon={Copy}
+                                tooltip="Copy to Clipboard"
+                                onClick={handleCopy}
+                                success={copied}
+                                disabled={!text}
+                                className={cn(copied && "bg-green-500/10 border-green-500/50 text-green-600 hover:bg-green-500/20")}
+                            />
+                            <IconButton
+                                icon={Download}
+                                tooltip="Download as TXT"
+                                onClick={handleDownload}
+                                disabled={!text}
+                            />
+                            <IconButton
+                                icon={Trash2}
+                                tooltip="Clear All"
+                                onClick={onClear}
+                                disabled={!text}
+                                className="hover:bg-destructive/10 hover:text-destructive hover:border-destructive/30"
+                            />
                         </div>
                     </div>
                 </CardContent>
             </Card>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                {[
-                    { label: "Sentence case", fn: toSentenceCase },
-                    { label: "lower case", fn: toLowerCase },
-                    { label: "UPPER CASE", fn: toUpperCase },
-                    { label: "Capitalized Case", fn: toCapitalizedCase },
-                    { label: "aLtErNaTiNg cAsE", fn: toAlternatingCase },
-                    { label: "Title Case", fn: toTitleCase },
-                    { label: "InVeRsE CaSe", fn: toInverseCase },
-                ].map((btn) => (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
+                {CONVERSION_OPTIONS.map(({ label, fn }) => (
                     <Button
-                        key={btn.label}
+                        key={label}
                         variant="secondary"
-                        className="rounded-xl h-12 font-medium transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] bg-secondary hover:bg-primary hover:text-primary-foreground shadow-sm"
-                        onClick={() => applyConversion(btn.fn)}
+                        className="rounded-xl h-12 text-sm font-semibold transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] bg-secondary/80 hover:bg-primary hover:text-primary-foreground shadow-sm hover:shadow-primary/20 border border-transparent hover:border-primary/20"
+                        onClick={() => applyConversion(fn)}
+                        disabled={!text}
                     >
-                        {btn.label}
+                        {label}
                     </Button>
                 ))}
             </div>
 
-            <div className="pt-6">
+            <div className="pt-12">
                 <InfoGrid>
                     <InfoCard
                         title="Fast & Simple"

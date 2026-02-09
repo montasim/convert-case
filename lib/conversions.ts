@@ -36,11 +36,7 @@ export const toTitleCase = (text: string) => {
 };
 
 export const toInverseCase = (text: string) => {
-    return text.split('').map(char => {
-        if (char === char.toUpperCase()) {
-            return char.toLowerCase();
-        } else {
-            return char.toUpperCase();
-        }
-    }).join('');
+    return text.split('').map(char =>
+        char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase()
+    ).join('');
 };
