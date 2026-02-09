@@ -7,19 +7,25 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, MessageSquare, Send, Globe } from "lucide-react";
 import { useState } from "react";
+import { sendEmail } from "@/lib/actions";
 
 export default function ContactPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // Simulate API call
-        setTimeout(() => {
-            setIsSubmitting(false);
+
+        const formData = new FormData(e.currentTarget);
+        const result = await sendEmail(formData);
+
+        setIsSubmitting(false);
+        if (result.success) {
             setSubmitted(true);
-        }, 1500);
+        } else {
+            alert(result.error || "Something went wrong. Please try again.");
+        }
     };
 
     return (
@@ -113,23 +119,24 @@ export default function ContactPage() {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <Label htmlFor="name">Full Name</Label>
-                                            <Input id="name" placeholder="John Doe" required className="rounded-xl bg-background/50" />
+                                            <Input id="name" name="name" placeholder="John Doe" required className="rounded-xl bg-background/50" />
                                         </div>
                                         <div className="space-y-2">
                                             <Label htmlFor="email">Email Address</Label>
-                                            <Input id="email" type="email" placeholder="john@example.com" required className="rounded-xl bg-background/50" />
+                                            <Input id="email" name="email" type="email" placeholder="john@example.com" required className="rounded-xl bg-background/50" />
                                         </div>
                                     </div>
 
                                     <div className="space-y-2">
                                         <Label htmlFor="subject">Subject</Label>
-                                        <Input id="subject" placeholder="How can we help?" required className="rounded-xl bg-background/50" />
+                                        <Input id="subject" name="subject" placeholder="How can we help?" required className="rounded-xl bg-background/50" />
                                     </div>
 
                                     <div className="space-y-2 flex-1">
                                         <Label htmlFor="message">Message</Label>
                                         <Textarea
                                             id="message"
+                                            name="message"
                                             placeholder="Tell us more about your inquiry..."
                                             required
                                             className="rounded-xl bg-background/50 min-h-[150px]"
