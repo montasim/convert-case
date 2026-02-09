@@ -43,10 +43,19 @@ import { useCaseConverter } from "@/lib/hooks";
  */
 
 function StatBadge({ icon: Icon, label, value }: { icon: LucideIcon, label: string, value: number }) {
+    const colorMap: Record<string, string> = {
+        "Characters": "text-primary",
+        "Words": "text-chart-2",
+        "Lines": "text-chart-5"
+    };
+    const activeColor = colorMap[label] || "text-primary";
+
     return (
-        <div className="flex items-center gap-2 px-3 py-1.5 bg-background/50 rounded-full ring-1 ring-border/50 text-sm font-medium text-muted-foreground transition-all hover:ring-primary/30">
-            <Icon className="w-4 h-4 text-primary/60" />
-            <span>{label}: <span className="text-foreground">{value}</span></span>
+        <div className="flex items-center gap-2.5 px-4 py-2 bg-background/60 shadow-sm rounded-2xl ring-1 ring-border transition-all hover:ring-primary/40 hover:bg-background/90 hover:scale-105 group/badge">
+            <Icon className={cn("w-4 h-4 transition-colors", activeColor)} />
+            <span className="text-sm font-semibold text-muted-foreground transition-colors group-hover/badge:text-foreground">
+                {label}: <span className="text-foreground">{value}</span>
+            </span>
         </div>
     );
 }
@@ -75,12 +84,15 @@ function IconButton({
                         size="icon"
                         onClick={onClick}
                         disabled={disabled}
-                        className={cn("rounded-xl transition-all duration-300", className)}
+                        className={cn(
+                            "rounded-2xl transition-all duration-300 hover:scale-110 active:scale-90 shadow-sm border-border bg-background",
+                            className
+                        )}
                     >
-                        {success ? <Check className="w-4 h-4 animate-in zoom-in" /> : <Icon className="w-4 h-4" />}
+                        {success ? <Check className="w-5 h-5 animate-in zoom-in text-green-500" /> : <Icon className="w-5 h-5 text-muted-foreground hover:text-primary transition-colors" />}
                     </Button>
                 </TooltipTrigger>
-                <TooltipContent>{tooltip}</TooltipContent>
+                <TooltipContent side="top" className="bg-foreground text-background font-bold border-none">{tooltip}</TooltipContent>
             </Tooltip>
         </TooltipProvider>
     );

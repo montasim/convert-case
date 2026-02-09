@@ -77,16 +77,18 @@ export function Footer() {
 export function PageLayout({ children }: { children: React.ReactNode }) {
     return (
         <main className="min-h-screen relative overflow-hidden bg-background/50 selection:bg-primary/20 selection:text-primary">
-            {/* Soft, colorful ambient background */}
-            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] animate-blob" />
-            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-chart-2/5 rounded-full blur-[120px] animate-blob animation-delay-2000" />
-            <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-chart-3/5 rounded-full blur-[120px] animate-blob animation-delay-4000" />
+            {/* Soft, colorful ambient background - pointer-events-none ensures they don't block clicks */}
+            <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[120px] animate-blob pointer-events-none" />
+            <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-chart-2/5 rounded-full blur-[120px] animate-blob animation-delay-2000 pointer-events-none" />
+            <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-chart-3/5 rounded-full blur-[120px] animate-blob animation-delay-4000 pointer-events-none" />
 
             <Header />
-            <div className="container mx-auto px-4 pt-36 pb-20 relative z-10">
-                {children}
+            <div className="relative z-10 w-full flex flex-col min-h-screen">
+                <div className="container mx-auto px-4 pt-36 pb-20 flex-grow">
+                    {children}
+                </div>
+                <Footer />
             </div>
-            <Footer />
         </main>
     );
 }
