@@ -2,6 +2,19 @@
   "name": "gitnamex",
   "version": "0.1.0",
   "description": "Smart Git Branch Name Generator - Generate meaningful branch names from your commit messages or feature descriptions",
+  "keywords": [
+    "git",
+    "branch",
+    "branch-name",
+    "git-branch",
+    "name-generator",
+    "developer-tools",
+    "git-workflow",
+    "nextjs",
+    "react",
+    "typescript",
+    "tailwindcss"
+  ],
   "private": true,
   "scripts": {
     "dev": "next dev",
