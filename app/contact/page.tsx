@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MessageSquare, Send, Globe } from "lucide-react";
+import { Mail, MessageSquare, Send, Globe, GitBranch } from "lucide-react";
 import { sendEmail } from "@/lib/actions";
 
 export default function ContactPage() {
@@ -35,7 +35,7 @@ export default function ContactPage() {
             <div className="max-w-5xl mx-auto space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
                 <PageHeader
                     title="Get in Touch"
-                    description="Have questions or feedback? We'd love to hear from you. Our team is here to help and improve your experience."
+                    description="Have questions about GitNameX or suggestions for improvement? We'd love to hear from you."
                     gradient
                 />
 
@@ -55,11 +55,11 @@ export default function ContactPage() {
 
                                 <div className="flex gap-4">
                                     <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                                        <MessageSquare className="w-6 h-6 text-primary" />
+                                        <GitBranch className="w-6 h-6 text-primary" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-lg">Live Support</h3>
-                                        <p className="text-muted-foreground">Available Mon-Fri, 9am - 5pm BST</p>
+                                        <h3 className="font-semibold text-lg">Git Support</h3>
+                                        <p className="text-muted-foreground">Questions about branch naming conventions?</p>
                                     </div>
                                 </div>
 
@@ -69,7 +69,7 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <h3 className="font-semibold text-lg">Global Reach</h3>
-                                        <p className="text-muted-foreground">Trusted by users worldwide</p>
+                                        <p className="text-muted-foreground">Trusted by developers worldwide</p>
                                     </div>
                                 </div>
                             </div>

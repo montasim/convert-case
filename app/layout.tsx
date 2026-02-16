@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Convert Case - Smart Online Text Conversion Tool",
-  description: "Fast, secure, and private online text case converter. Transform your text instantly with premium accuracy and a clean interface.",
+  title: "GitNameX - Git Branch Name Generator",
+  description: "Fast and simple git branch name generator. Create consistent, properly formatted branch names from your task descriptions instantly. Free, secure, and private.",
   icons: {
     icon: "/favicon.ico",
   },

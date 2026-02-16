@@ -74,7 +74,7 @@ export const getContactEmailHtml = (name: string, email: string, subject: string
     <div class="container">
         <div class="header">
             <h1>New Inquiry</h1>
-            <p style="margin: 5px 0 0; opacity: 0.9;">Message from Convert Case Contact Form</p>
+            <p style="margin: 5px 0 0; opacity: 0.9;">Message from GitNameX Contact Form</p>
         </div>
         <div class="content">
             <div class="field">
@@ -92,7 +92,7 @@ export const getContactEmailHtml = (name: string, email: string, subject: string
         </div>
         <div class="footer">
             <p>This email was sent from the contact form on convertcase.net</p>
-            <p>&copy; ${new Date().getFullYear()} Convert Case. All rights reserved.</p>
+            <p>&copy; ${new Date().getFullYear()} GitNameX. All rights reserved.</p>
         </div>
     </div>
 </body>
@@ -170,10 +170,10 @@ export const getConfirmationEmailHtml = (name: string) => `
             <p>Hi ${name},</p>
             <p>Thanks for reaching out! We've received your message and our team will get back to you as soon as possible.</p>
             <p>In the meantime, feel free to explore more tools on our website.</p>
-            <a href="https://convertcase.net" class="button">Visit Convert Case</a>
+            <a href="https://convertcase.net" class="button">Visit GitNameX</a>
         </div>
         <div class="footer">
-            <p>&copy; ${new Date().getFullYear()} Convert Case. All rights reserved.</p>
+            <p>&copy; ${new Date().getFullYear()} GitNameX. All rights reserved.</p>
         </div>
     </div>
 </body>

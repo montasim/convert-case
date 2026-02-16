@@ -65,3 +65,88 @@ export function useCaseConverter() {
         applyConversion,
     };
 }
+
+export type BranchPrefix = "none" | "feature" | "bug" | "custom";
+
+export interface BranchNameGeneratorState {
+    taskName: string;
+    setTaskName: (name: string) => void;
+    prefix: BranchPrefix;
+    setPrefix: (prefix: BranchPrefix) => void;
+    customPrefix: string;
+    setCustomPrefix: (prefix: string) => void;
+    divider: "-" | "_";
+    setDivider: (divider: "-" | "_") => void;
+    branchName: string;
+    copied: boolean;
+    handleCopy: () => Promise<void>;
+    handleClear: () => void;
+}
+
+function slugify(text: string, divider: "-" | "_"): string {
+    return text
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, "")
+        .replace(/[\s_-]+/g, divider)
+        .replace(/^-+|-+$/g, "");
+}
+
+export function useBranchNameGenerator(): BranchNameGeneratorState {
+    const [taskName, setTaskName] = useState("");
+    const [prefix, setPrefix] = useState<BranchPrefix>("none");
+    const [customPrefix, setCustomPrefix] = useState("");
+    const [divider, setDivider] = useState<"-" | "_">("-");
+    const [copied, setCopied] = useState(false);
+
+    const branchName = useMemo(() => {
+        if (!taskName.trim()) return "";
+
+        const slugifiedTask = slugify(taskName, divider);
+
+        if (prefix === "none") {
+            return slugifiedTask;
+        }
+
+        const prefixValue = prefix === "custom" ? customPrefix.toLowerCase() : prefix;
+
+        if (!prefixValue) {
+            return slugifiedTask;
+        }
+
+        return `${prefixValue}/${slugifiedTask}`;
+    }, [taskName, prefix, customPrefix, divider]);
+
+    const handleCopy = useCallback(async () => {
+        if (!branchName) return;
+        try {
+            await navigator.clipboard.writeText(branchName);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+            console.error("Failed to copy branch name: ", err);
+        }
+    }, [branchName]);
+
+    const handleClear = useCallback(() => {
+        setTaskName("");
+        setPrefix("feature");
+        setCustomPrefix("");
+        setDivider("-");
+    }, []);
+
+    return {
+        taskName,
+        setTaskName,
+        prefix,
+        setPrefix,
+        customPrefix,
+        setCustomPrefix,
+        divider,
+        setDivider,
+        branchName,
+        copied,
+        handleCopy,
+        handleClear,
+    };
+}

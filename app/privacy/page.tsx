@@ -1,7 +1,7 @@
 "use client";
 
 import { PageLayout, PageHeader, InfoCard, PageSection, InfoGrid, ContentCard } from "@/components/layout";
-import { ShieldCheck, Lock, Eye, FileText } from "lucide-react";
+import { ShieldCheck, Lock, Eye, GitBranch } from "lucide-react";
 
 export default function PrivacyPage() {
     return (
@@ -16,12 +16,12 @@ export default function PrivacyPage() {
                 <InfoGrid cols={2}>
                     <InfoCard
                         title="Local Processing"
-                        description="All text conversions are performed locally in your browser using JavaScript. Your text never leaves your device and is never sent to our servers."
+                        description="All branch name generation happens locally in your browser using JavaScript. Your task names never leave your device and are never sent to our servers."
                         icon={Lock}
                     />
                     <InfoCard
                         title="No Data Storage"
-                        description="We do not store, log, or track any of the text you input into our converter. Once you close the tab or refresh the page, your data is gone."
+                        description="We do not store, log, or track any of the task names you input. Once you close the tab or refresh the page, your data is gone."
                         icon={ShieldCheck}
                     />
                 </InfoGrid>
@@ -29,13 +29,13 @@ export default function PrivacyPage() {
                 <ContentCard>
                     <PageSection title="Detailed Information" icon={Eye}>
                         <p>
-                            At Convert Case, we are committed to providing a secure and private environment for all users. This policy outlines our limited data collection practices.
+                            At GitNameX, we are committed to providing a secure and private environment for all developers. This policy outlines our limited data collection practices.
                         </p>
                     </PageSection>
 
                     <PageSection title="1. Data Collection">
                         <p>
-                            We do not collect any personal identification information (PII). We may use anonymous analytics to understand general usage patterns and improve our user experience, but this never includes the content you convert.
+                            We do not collect any personal identification information (PII). We may use anonymous analytics to understand general usage patterns and improve our user experience, but this never includes the task names or branch names you generate.
                         </p>
                     </PageSection>
 

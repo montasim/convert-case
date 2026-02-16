@@ -21,9 +21,9 @@ export default function NotFound() {
                 </div>
 
                 <div className="space-y-4 max-w-lg relative z-10">
-                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Lost in Casing?</h2>
+                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Branch Not Found</h2>
                     <p className="text-muted-foreground text-lg">
-                        We couldn&apos;t find the page you&apos;re looking for. It might have been moved, renamed, or converted into an alternate dimension.
+                        We couldn&apos;t find the page you&apos;re looking for. It might have been moved, renamed, or pushed to a different branch.
                     </p>
                 </div>
 
@@ -47,7 +47,7 @@ export default function NotFound() {
                     <span>Not Found</span>
                     <span>Invalid URL</span>
                     <span>404 Error</span>
-                    <span>Case Lost</span>
+                    <span>Git Lost</span>
                 </div>
             </div>
         </PageLayout>

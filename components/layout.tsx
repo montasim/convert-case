@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { Github } from "lucide-react";
+import { Github, GitBranch } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -13,11 +13,11 @@ export function Logo({ className, iconSize = "w-10 h-10", textSize = "text-2xl",
     return (
         <div className={cn("flex items-center gap-2", className)}>
             <div className={cn("bg-primary rounded-xl flex items-center justify-center shrink-0 shadow-lg shadow-primary/20", iconSize)}>
-                <span className="text-primary-foreground font-black leading-none" style={{ fontSize: '1.5rem' }}>C</span>
+                <GitBranch className="w-5 h-5 text-primary-foreground" />
             </div>
             {showText && (
                 <span className={cn("font-black tracking-tight leading-none bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70", textSize)}>
-                    Convert Case
+                    GitNameX
                 </span>
             )}
         </div>
@@ -35,6 +35,14 @@ export function Header() {
                 </Link>
 
                 <div className="flex items-center gap-2">
+                    <nav className="hidden md:flex items-center gap-1 mr-4">
+                        <Link
+                            href="/contact"
+                            className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-all"
+                        >
+                            Contact
+                        </Link>
+                    </nav>
                     <ModeToggle />
                     <a
                         href="https://github.com/montasim/caseify-case-converter"

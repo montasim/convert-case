@@ -23,7 +23,7 @@ export async function sendEmail(formData: FormData) {
     try {
         // Send email to admin
         const adminEmail = await resend.emails.send({
-            from: `Convert Case Contact <${emailFrom}>`,
+            from: `GitNameX Contact <${emailFrom}>`,
             to: [contactEmail],
             replyTo: email,
             subject: `Contact Form: ${subject}`,
@@ -38,7 +38,7 @@ export async function sendEmail(formData: FormData) {
         // Send confirmation email to user
         try {
             await resend.emails.send({
-                from: `Convert Case <${emailFrom}>`,
+                from: `GitNameX <${emailFrom}>`,
                 to: [email],
                 subject: "We've received your message!",
                 html: getConfirmationEmailHtml(name),

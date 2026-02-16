@@ -1,13 +1,13 @@
-# 🔄 Convert Case - Smart Online Text Conversion Tool
+# 🔄 GitNameX - Smart Online Text Conversion Tool
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-blue?logo=tailwind-css)](https://tailwindcss.com/)
 [![Resend](https://img.shields.io/badge/Resend-Email-orange?logo=resend)](https://resend.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
 
-**Convert Case** is a premium, high-performance web application designed for quick and smart text transformations. Built with modern web technologies, it offers a seamless user experience for writers, developers, and office professionals.
+**GitNameX** is a premium, high-performance web application designed for quick and smart text transformations. Built with modern web technologies, it offers a seamless user experience for writers, developers, and office professionals.
 
-![Convert Case Preview](public/preview.png) *(Note: Add a preview image to public/preview.png for better visibility)*
+![GitNameX Preview](public/preview.png) *(Note: Add a preview image to public/preview.png for better visibility)*
 
 ## ✨ Features
 

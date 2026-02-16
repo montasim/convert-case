@@ -35,7 +35,7 @@ export default function Error({
                 <div className="space-y-4 max-w-lg relative z-10">
                     <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Something went wrong</h2>
                     <p className="text-muted-foreground text-lg">
-                        An unexpected error occurred while converting your request. Don&apos;t worry, your text is likely still safe in your clipboard!
+                        An unexpected error occurred while generating your branch name. Don&apos;t worry, your code is probably still safe in your repository!
                     </p>
                 </div>
 
