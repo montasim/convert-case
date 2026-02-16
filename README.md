@@ -1,26 +1,26 @@
-# 🔄 GitNameX - Smart Online Text Conversion Tool
+# 🌿 GitNameX - Smart Git Branch Name Generator
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-blue?logo=tailwind-css)](https://tailwindcss.com/)
 [![Resend](https://img.shields.io/badge/Resend-Email-orange?logo=resend)](https://resend.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
 
-**GitNameX** is a premium, high-performance web application designed for quick and smart text transformations. Built with modern web technologies, it offers a seamless user experience for writers, developers, and office professionals.
+**GitNameX** is a premium, high-performance web application designed to generate meaningful and consistent Git branch names from your commit messages or feature descriptions. Built with modern web technologies, it offers a seamless experience for developers who want to maintain clean and organized Git workflows.
 
 ![GitNameX Preview](public/preview.png) *(Note: Add a preview image to public/preview.png for better visibility)*
 
 ## ✨ Features
 
-- **🚀 Multiple Conversion Modes**:
-  - `Sentence case`: Capitalizes the first letter of sentences.
-  - `lower case`: Converts everything to lowercase.
-  - `UPPER CASE`: Converts everything to uppercase.
-  - `Capitalized Case`: Capitalizes every word.
-  - `aLtErNaTiNg cAsE`: Toggles case for every character.
-  - `Title Case`: Standard title formatting following grammar rules.
-  - `iNVERSE cASE`: Swaps uppercase for lowercase and vice versa.
-- **📊 Real-time Analytics**: Word count, character count, and line count as you type.
-- **📥 One-Click Actions**: Quickly copy to clipboard or download as a text file.
+- **🚀 Smart Branch Name Generation**:
+  - `feature/*`: Generate feature branch names from descriptions
+  - `bugfix/*`: Create bugfix branch names from issue descriptions
+  - `hotfix/*`: Quick hotfix branch naming for urgent patches
+  - `release/*`: Standardized release branch naming
+  - `chore/*`: Generate chore branch names for maintenance tasks
+  - `docs/*`: Documentation branch naming convention
+  - `refactor/*`: Clean refactor branch name generation
+- **📊 Real-time Preview**: See generated branch names instantly as you type.
+- **📥 One-Click Copy**: Quickly copy branch names to clipboard.
 - **📧 Integrated Contact Form**: Beautifully designed contact page powered by Resend for reliable email delivery.
 - **🌓 Dark Mode**: Premium "Midnight Slate" theme for comfortable night-time usage.
 - **📱 Fully Responsive**: Optimized for mobile, tablet, and desktop devices.
@@ -38,15 +38,15 @@
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - pnpm / npm / yarn
 
 ### Installation
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/montasim/caseify-case-converter.git
-   cd convert-case
+   git clone https://github.com/r3tr0/GitNameX.git
+   cd GitNameX
    ```
 
 2. **Install dependencies**:
@@ -58,7 +58,7 @@
    Create a `.env.local` file in the root directory and add your Resend API key and email configurations:
    ```env
    NEXT_PUBLIC_RESEND_API_KEY=re_your_api_key
-   NEXT_PUBLIC_CONTACT_EMAIL=montasimmamun@gmail.com
+   NEXT_PUBLIC_CONTACT_EMAIL=your-email@example.com
    NEXT_PUBLIC_EMAIL_FROM=onboarding@resend.dev
    ```
 
@@ -77,7 +77,7 @@
 ├── components/         # Reusable UI components (shadcn/ui)
 ├── lib/                # Logic, helpers, and server actions
 │   ├── actions.ts      # Server-side email handling
-│   ├── conversions.ts  # Text transformation algorithms
+│   ├── branch-names.ts # Branch name generation algorithms
 │   ├── email-templates.ts # HTML templates for Resend
 │   └── resend.ts       # Centralized Resend client
 ├── public/             # Static assets (logos, icons)
