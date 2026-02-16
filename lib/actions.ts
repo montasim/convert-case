@@ -16,6 +16,10 @@ export async function sendEmail(formData: FormData) {
     const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
     const emailFrom = process.env.NEXT_PUBLIC_EMAIL_FROM;
 
+    if (!contactEmail || !emailFrom) {
+        return { error: "Email configuration is missing" };
+    }
+
     try {
         // Send email to admin
         const adminEmail = await resend.emails.send({
